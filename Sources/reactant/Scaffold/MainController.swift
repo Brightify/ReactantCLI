@@ -127,6 +127,74 @@ func assetsJson() -> [String] {
     ]
 }
 
+func appIconJson() -> [String] {
+    return [
+        "{",
+        "  \"images\" : [",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"20x20\",",
+        "      \"scale\" : \"2x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"20x20\",",
+        "      \"scale\" : \"3x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"29x29\",",
+        "      \"scale\" : \"1x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"29x29\",",
+        "      \"scale\" : \"2x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"29x29\",",
+        "      \"scale\" : \"3x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"40x40\",",
+        "      \"scale\" : \"2x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"40x40\",",
+        "      \"scale\" : \"3x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"57x57\",",
+        "      \"scale\" : \"1x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"57x57\",",
+        "      \"scale\" : \"2x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"60x60\",",
+        "      \"scale\" : \"2x\"",
+        "    },",
+        "    {",
+        "      \"idiom\" : \"iphone\",",
+        "      \"size\" : \"60x60\",",
+        "      \"scale\" : \"3x\"",
+        "    }",
+        "  ],",
+        "  \"info\" : {",
+        "    \"version\" : 1,",
+        "    \"author\" : \"xcode\"",
+        "  }",
+        "}",
+    ]
+}
+
 func mainWireframe() -> [String] {
     return [
         "import UIKit",
@@ -161,27 +229,34 @@ func generalStyles() -> [String] {
     ]
 }
 
-func appDelegate() -> [String] {
-    return [
-        "import UIKit",
-        "import Reactant",
-        "",
-        "@UIApplicationMain",
-        "class AppDelegate : UIResponder, UIApplicationDelegate {",
-        "    var window : UIWindow?",
-        "",
-        "    private let module = ApplicationModule()",
-        "",
-        "    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {",
-        "        Configuration.global.set(Properties.Style.controllerRoot, to: GeneralStyles.controllerRootView)",
-        "",
-        "        let window = UIWindow()",
-        "        let wireframe = MainWireframe(module: module)",
-        "        window.rootViewController = wireframe.entrypoint()",
-        "        window.makeKeyAndVisible()",
-        "        self.window = window",
-        "        return true",
-        "    }",
-        "}",
-    ]
+func appDelegate(experimentalFeatures: Set<ExperimentalFeatures>) -> () -> [String] {
+    return {
+        [
+            "import UIKit",
+            "import Reactant",
+            "",
+            "@UIApplicationMain",
+            "class AppDelegate : UIResponder, UIApplicationDelegate {",
+            "    var window : UIWindow?",
+            "",
+            "    private let module = ApplicationModule()",
+            "",
+            "    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]?) -> Bool {",
+            experimentalFeatures.contains(.xmlUI) ?
+                "        Configuration.global.set(Properties.Style.controllerRoot, to: GeneralStyles.controllerRootView)" :
+                "        Configuration.global.set(Properties.Style.controllerRoot) { $0.backgroundColor = .white }",
+            "",
+            "        let window = UIWindow()",
+            "        let wireframe = MainWireframe(module: module)",
+            "        window.rootViewController = wireframe.entrypoint()",
+            "        window.makeKeyAndVisible()",
+            "        self.window = window",
+            experimentalFeatures.contains(.liveUI) ?
+                "        activateLiveReload(in: window)" :
+                "",
+            "        return true",
+            "    }",
+            "}",
+        ]
+    }
 }

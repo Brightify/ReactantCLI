@@ -386,6 +386,7 @@ func xcodeProject(
                 if config.platform == .iOS {
                     targetSettings.common.CODE_SIGN_IDENTITY[.iphoneos] = "iPhone Developer"
                 }
+                targetSettings.common.ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon"
 //                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 //                targetSettings.common.SKIP_INSTALL = "YES"
             } else {
@@ -405,7 +406,7 @@ func xcodeProject(
         targetSettings.common.HEADER_SEARCH_PATHS = hdrInclPaths
 
         // Add framework search path to build settings.
-        targetSettings.common.FRAMEWORK_SEARCH_PATHS = ["$(inherited)", "$(PLATFORM_DIR)/Developer/Library/Frameworks"]
+//        targetSettings.common.FRAMEWORK_SEARCH_PATHS = ["$(inherited)", "$(PLATFORM_DIR)/Developer/Library/Frameworks"]
 
         if !target.isTest && config.experimentalFeatures.contains(.xmlUI) {
             let enableLive = config.experimentalFeatures.contains(.liveUI) ? " --enable-live" : ""

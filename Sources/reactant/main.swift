@@ -109,7 +109,7 @@ class ResolvedTarget: ObjectIdentifierProtocol {
     var productPath: RelativePath {
         switch type {
         case .main:
-            return RelativePath(name + ".app")
+            return RelativePath(name)
         case .uiTest, .unitTest:
             return RelativePath("\(c99name).xctest")
         }
@@ -233,9 +233,10 @@ func askForConfiguration() -> ProjectConfiguration {
         Source(path: "Sources/Services", type: .directory),
         Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)),
         Source(path: "Sources/Wireframes/MainWireframe.swift", type: .source(mainWireframe)),
-        Source(path: "Sources/AppDelegate.swift", type: .source(appDelegate)),
+        Source(path: "Sources/AppDelegate.swift", type: .source(appDelegate(experimentalFeatures: experimentalFeatures))),
         Source(path: "Sources/DependencyModule.swift", type: .source(dependencyModule)),
         Source(path: "Sources/ApplicationModule.swift", type: .source(applicationModule)),
+        Source(path: "Resources/Assets.xcassets/AppIcon.appiconset/Contents.json", type: .file(assetsJson), ignoreXcode: true),
         Source(path: "Resources/Assets.xcassets/Contents.json", type: .file(assetsJson), ignoreXcode: true),
         Source(path: "Resources/Assets.xcassets", type: .resourceRef),
         Source(path: "Resources/LaunchScreen.storyboard", type: .resource(launchScreen)),

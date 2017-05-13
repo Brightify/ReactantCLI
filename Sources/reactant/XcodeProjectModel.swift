@@ -354,6 +354,7 @@ public struct Xcode {
             // Note: although some of these build settings sound like booleans,
             // they are all either strings or arrays of strings, because even
             // a boolean may be a macro reference expression.
+            var ASSETCATALOG_COMPILER_APPICON_NAME: String?
             var DEVELOPMENT_TEAM: String?
             var CLANG_ENABLE_OBJC_ARC: String?
             var CODE_SIGN_IDENTITY = BuildSettingsItem()
