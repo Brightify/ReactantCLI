@@ -7,7 +7,14 @@ let package = Package(
     targets: [
         Target(
             name: "reactant",
-            dependencies: []
+            dependencies: [
+
+            ]
         )
+    ],
+    dependencies: [
+        .Package(url: "https://github.com/jakeheis/SwiftCLI", majorVersion: 3, minor: 0),
+        .Package(url: "https://github.com/onevcat/Rainbow", majorVersion: 2),
+        .Package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", "0.5.0")
     ]
 )

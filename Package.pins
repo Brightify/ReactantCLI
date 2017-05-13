@@ -1,0 +1,24 @@
+{
+  "autoPin": true,
+  "pins": [
+    {
+      "package": "Rainbow",
+      "reason": null,
+      "repositoryURL": "https://github.com/onevcat/Rainbow",
+      "version": "2.0.1"
+    },
+    {
+      "package": "SwiftCLI",
+      "reason": null,
+      "repositoryURL": "https://github.com/jakeheis/SwiftCLI",
+      "version": "3.0.0"
+    },
+    {
+      "package": "SwiftyTextTable",
+      "reason": null,
+      "repositoryURL": "https://github.com/scottrhoyt/SwiftyTextTable.git",
+      "version": "0.5.0"
+    }
+  ],
+  "version": 1
+}
