@@ -413,7 +413,7 @@ func xcodeProject(
                 "pushd \"$PODS_ROOT/ReactantUI\"",
                 "env -i HOME=\"$HOME\" PATH=\"$PATH\" swift build",
                 "popd",
-                "cd \"$SRCROOT/Application/Source\"",
+                "cd \"$SRCROOT/Application/Sources\"",
                 "\"$PODS_ROOT/ReactantUI/.build/debug/reactant-ui\"\(enableLive) > \"$SRCROOT/Application/Generated/GeneratedUI.swift\"",
                 ].joined(separator: "\n"))
             runReactantUI.name = "Run ReactantUI"
