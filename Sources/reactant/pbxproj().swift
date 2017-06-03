@@ -420,6 +420,12 @@ func xcodeProject(
             runReactantUI.name = "Run ReactantUI"
         }
 
+        if config.experimentalFeatures.contains(.torch) {
+            let runTorchGenerator = xcodeTarget.addShellScriptBuildPhase(script:
+                "\"$PODS_ROOT/TorchORM/run\" generate --output \"$SRCROOT/Application/Generated/ModelExtensions.generated.swift\" \"$SRCROOT/Application/Sources/Models\"")
+            runTorchGenerator.name = "Run Torch Generator"
+        }
+
         // Add a file reference for the target's product.
         let productRef = productsGroup.addFileReference(path: target.productPath.asString, pathBase: .buildDir)
 

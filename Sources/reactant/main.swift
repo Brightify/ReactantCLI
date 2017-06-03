@@ -193,7 +193,7 @@ struct ProjectConfiguration: CustomStringConvertible {
         table.addRow(values: ["product name", productName])
         table.addRow(values: ["development team", developmentTeam])
         table.addRow(values: ["bundle identifier", bundleIdentifier])
-        table.addRow(values: ["output dir", outputDir])
+        table.addRow(values: ["output dir", outputDir.asString])
         table.addRow(values: ["experimental features", experimentalFeatures.map { $0.name }])
 
         return table.render()

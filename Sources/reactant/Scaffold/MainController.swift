@@ -260,3 +260,23 @@ func appDelegate(experimentalFeatures: Set<ExperimentalFeatures>) -> () -> [Stri
         ]
     }
 }
+
+func sampleTorchModel() -> [String] {
+    return [
+        "import Torch",
+        "",
+        "struct SampleModel: TorchEntity {",
+        "",
+        "   var id: Int?",
+        "   var name: String",
+        "}",
+    ]
+}
+
+func sampleService() -> [String] {
+    return [
+        "import Foundation",
+        "",
+        "struct SampleService { }",
+    ]
+}

@@ -84,6 +84,9 @@ func generate(
             if config.experimentalFeatures.contains(.liveUI) {
                 print("    pod 'ReactantLiveUI', :configuration => 'Debug'")
             }
+            if config.experimentalFeatures.contains(.torch) {
+                print("    pod 'TorchORM', :git => 'https://github.com/SwiftKit/Torch.git', :branch => 'swift-pm'")
+            }
         case .macOS:
             print("    pod 'Reactant', :git => 'https://github.com/Brightify/Reactant.git', :branch => 'macos-new'")
         }
@@ -190,6 +193,8 @@ func generate(
             print("  <string>6.0</string>")
             print("  <key>CFBundleName</key>")
             print("  <string>$(PRODUCT_NAME)</string>")
+            print("  <key>CFBundleDisplayName</key>")
+            print("  <string>\(target.name)</string>")
             print("  <key>CFBundlePackageType</key>")
             if target.isTest {
                 print("  <string>BNDL</string>")

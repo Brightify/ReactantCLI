@@ -67,14 +67,29 @@ class InitCommand: Command {
             }
         }
 
+        if readBool(title: "Enable Torch ORM?") {
+            experimentalFeatures.insert(.torch)
+        }
+
+        if false && readBool(title: "Enable Cuckoo - boilerplate free mocking framework?") {
+            experimentalFeatures.insert(.cuckoo)
+        }
+
         let workingDir = AbsolutePath(FileManager.default.currentDirectoryPath)
         let outputDir = RelativePath(productName)
         let applicationDir = workingDir.appending(outputDir).appending(components: "Application")
 
         var mainSources = [] as [Source]
 
-        if experimentalFeatures.contains(.xmlUI) {
+        if experimentalFeatures.contains(.torch) || experimentalFeatures.contains(.xmlUI) {
             mainSources.append(Source(path: "Generated", type: .directory))
+        }
+
+        if experimentalFeatures.contains(.torch) {
+            mainSources.append(Source(path: "Generated/ModelExtensions.generated.swift", type: .sourceRef))
+        }
+
+        if experimentalFeatures.contains(.xmlUI) {
             mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .sourceRef))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source(mainRootViewXml)))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.ui.xml", type: .file(mainRootViewXmlUI)))
@@ -84,8 +99,8 @@ class InitCommand: Command {
 
         mainSources.append(contentsOf: [
             Source(path: "Sources/Components/Main/MainController.swift", type: .source(mainController)),
-            Source(path: "Sources/Models", type: .directory),
-            Source(path: "Sources/Services", type: .directory),
+            Source(path: "Sources/Models/SampleModel.swift", type: .source(sampleTorchModel)),
+            Source(path: "Sources/Services/SampleService.swift", type: .source(sampleService)),
             Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)),
             Source(path: "Sources/Wireframes/MainWireframe.swift", type: .source(mainWireframe)),
             Source(path: "Sources/AppDelegate.swift", type: .source(appDelegate(experimentalFeatures: experimentalFeatures))),
