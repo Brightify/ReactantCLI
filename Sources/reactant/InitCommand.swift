@@ -7,19 +7,7 @@ class InitCommand: Command {
     let name = "init"
     let shortDescription = "Initializes a Reactant project"
 
-    func execute() throws  {
-        @discardableResult
-        func shell(workingDir: String? = nil, _ args: String...) -> Int32 {
-            let task = Process()
-            task.launchPath = "/usr/bin/env"
-            task.arguments = args
-            if let workingDir = workingDir {
-                task.currentDirectoryPath = workingDir
-            }
-            task.launch()
-            task.waitUntilExit()
-            return task.terminationStatus
-        }
+    func execute() throws {
 
         let config = askForConfiguration()
 
@@ -49,27 +37,6 @@ class InitCommand: Command {
 
         if config.versionControl == .git  {
             shell(workingDir: config.projectDir.asString, "git", "commit", "-m Initial commit.")
-        }
-    }
-
-    func readString(title: String) -> String {
-        print(title.yellow)
-        guard let string = readLine() else {
-            return readString(title: title)
-        }
-        return string
-    }
-
-    func readBool(title: String) -> Bool {
-        let string = readString(title: title + " [y/n]").lowercased()
-        let trueValues = ["y", "yes", "true"] as Set<String>
-        let falseValues = ["n", "no", "false"] as Set<String>
-        if trueValues.contains(string) {
-            return true
-        } else if falseValues.contains(string) {
-            return false
-        } else {
-            return readBool(title: title)
         }
     }
 
@@ -115,15 +82,14 @@ class InitCommand: Command {
             mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .sourceRef))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source(mainRootViewXml)))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.ui.xml", type: .file(mainRootViewXmlUI)))
+            mainSources.append(Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)))
         } else {
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source(mainRootView)))
         }
 
         mainSources.append(contentsOf: [
             Source(path: "Sources/Components/Main/MainController.swift", type: .source(mainController)),
-
             Source(path: "Sources/Services/SampleService.swift", type: .source(sampleService)),
-            Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)),
             Source(path: "Sources/Wireframes/MainWireframe.swift", type: .source(mainWireframe)),
             Source(path: "Sources/AppDelegate.swift", type: .source(appDelegate(experimentalFeatures: experimentalFeatures))),
             Source(path: "Sources/DependencyModule.swift", type: .source(dependencyModule)),
