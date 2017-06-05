@@ -24,12 +24,31 @@ class InitCommand: Command {
         let config = askForConfiguration()
 
         try! generate(config: config, options: XcodeprojOptions())
+
+        if config.versionControl == .git {
+            shell(workingDir: config.projectDir.asString, "git", "init")
+            try open(config.projectDir.appending(component: ".gitignore")) { print in
+                gitignore().forEach(print)
+            }
+            shell(workingDir: config.projectDir.asString, "git", "add", "Application")
+            shell(workingDir: config.projectDir.asString, "git", "add", ".gitignore")
+            shell(workingDir: config.projectDir.asString, "git", "add", "\(config.productName).xcodeproj")
+        }
+
         switch config.dependencyManager {
         case .cocoaPods:
             shell(workingDir: config.projectDir.asString, "pod", "install")
+            if config.versionControl == .git {
+                shell(workingDir: config.projectDir.asString, "git", "add", "Podfile")
+                shell(workingDir: config.projectDir.asString, "git", "add", "Podfile.lock")
+            }
             shell(workingDir: config.projectDir.asString, "open", "\(config.productName).xcworkspace")
         default:
             shell(workingDir: config.projectDir.asString, "open", "\(config.productName).xcodeproj")
+        }
+
+        if config.versionControl == .git  {
+            shell(workingDir: config.projectDir.asString, "git", "commit", "-m Initial commit.")
         }
     }
 
@@ -86,7 +105,10 @@ class InitCommand: Command {
         }
 
         if experimentalFeatures.contains(.torch) {
+            mainSources.append(Source(path: "Sources/Models/SampleModel.swift", type: .source(sampleTorchModel)))
             mainSources.append(Source(path: "Generated/ModelExtensions.generated.swift", type: .sourceRef))
+        } else {
+            mainSources.append(Source(path: "Sources/Models/SampleModel.swift", type: .source(sampleModel)))
         }
 
         if experimentalFeatures.contains(.xmlUI) {
@@ -99,7 +121,7 @@ class InitCommand: Command {
 
         mainSources.append(contentsOf: [
             Source(path: "Sources/Components/Main/MainController.swift", type: .source(mainController)),
-            Source(path: "Sources/Models/SampleModel.swift", type: .source(sampleTorchModel)),
+
             Source(path: "Sources/Services/SampleService.swift", type: .source(sampleService)),
             Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)),
             Source(path: "Sources/Wireframes/MainWireframe.swift", type: .source(mainWireframe)),
@@ -139,6 +161,8 @@ class InitCommand: Command {
             )
         }
 
+        let versionControl: VersionControl = readBool(title: "Enable git?") ? .git : .none
+
         let setup = ProjectConfiguration(
             platform: .iOS,
             productName: productName,
@@ -148,7 +172,8 @@ class InitCommand: Command {
             workingDir: workingDir,
             outputDir: outputDir,
             targets: targets,
-            experimentalFeatures: experimentalFeatures)
+            experimentalFeatures: experimentalFeatures,
+            versionControl: versionControl)
         print(setup)
         guard readBool(title: "Is the current configuration OK?") else { return askForConfiguration() }
 

@@ -44,6 +44,11 @@ enum SDK: String {
     }
 }
 
+enum VersionControl: String {
+    case git
+    case none
+}
+
 enum Platform: String {
     case iOS
     case macOS
@@ -174,6 +179,7 @@ struct ProjectConfiguration: CustomStringConvertible {
     let outputDir: RelativePath
     let targets: [ResolvedTarget]
     let experimentalFeatures: Set<ExperimentalFeatures>
+    let versionControl: VersionControl
 
     var projectDir: AbsolutePath {
         return workingDir.appending(outputDir)
@@ -195,6 +201,7 @@ struct ProjectConfiguration: CustomStringConvertible {
         table.addRow(values: ["bundle identifier", bundleIdentifier])
         table.addRow(values: ["output dir", outputDir.asString])
         table.addRow(values: ["experimental features", experimentalFeatures.map { $0.name }])
+        table.addRow(values: ["version control", versionControl.rawValue])
 
         return table.render()
     }
