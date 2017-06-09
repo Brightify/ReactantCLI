@@ -174,6 +174,7 @@ public struct Xcode {
             case framework = "com.apple.product-type.framework"
             case executable = "com.apple.product-type.tool"
             case unitTest = "com.apple.product-type.bundle.unit-test"
+            case uiTest = "com.apple.product-type.bundle.ui-testing"
             var asString: String { return rawValue }
         }
         init(productType: ProductType?, name: String) {
@@ -393,6 +394,7 @@ public struct Xcode {
             var SWIFT_OPTIMIZATION_LEVEL: String?
             var SWIFT_VERSION: String?
             var TARGET_NAME: String?
+            var TEST_TARGET_NAME: String?
             var USE_HEADERMAP: String?
         }
     }

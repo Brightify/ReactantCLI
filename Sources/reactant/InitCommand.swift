@@ -117,13 +117,17 @@ class InitCommand: Command {
                     type: .unitTest)
             )
         }
-        if false && readBool(title: "Enable UI Tests?") {
+        if readBool(title: "Enable UI Tests?") {
             let uiTestDir = workingDir.appending(outputDir).appending(components: "UITests")
+            let uiTestSources = [
+                Source(path: "Info.plist", type: .fileRef),
+                Source(path: "FirstUITest.swift", type: .source(exampleTest)),
+            ]
             targets.append(
                 ResolvedTarget(
                     name: "\(productName)UITests",
-                    sources: Sources(items: [], root: uiTestDir),
-                    type: .uiTest)
+                    sources: Sources(items: uiTestSources, root: uiTestDir),
+                    type: .uiTest(target: productName))
             )
         }
 

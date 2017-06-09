@@ -342,8 +342,10 @@ func xcodeProject(
         switch target.type {
         case .main:
             productType = .application
-        case .unitTest, .uiTest:
+        case .unitTest:
             productType = .unitTest
+        case .uiTest:
+            productType = .uiTest
         }
 
         // Create a Xcode target for the target.
@@ -366,35 +368,31 @@ func xcodeProject(
         let infoPlistFilePath = target.sources.root.appending(target.infoPlistPath)
         targetSettings.common.INFOPLIST_FILE = infoPlistFilePath.relative(to: outputDir).asString
 
-        if target.isTest {
+        switch target.type {
+        case .unitTest, .uiTest:
             targetSettings.common.EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES"
             targetSettings.common.LD_RUNPATH_SEARCH_PATHS = ["@loader_path/../Frameworks", "@loader_path/Frameworks"]
-        } else {
+            
+            if case .uiTest(let testTarget) = target.type {
+                targetSettings.common.TEST_TARGET_NAME = testTarget
+            }
+        case .main:
             // We currently force a search path to the toolchain, since we can't
             // establish an expected location for the Swift standard libraries.
             //
             // Note that this means that the built binaries are not suitable for
             // distribution, among other things.
-//            targetSettings.common.LD_RUNPATH_SEARCH_PATHS = ["$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"]
+            //            targetSettings.common.LD_RUNPATH_SEARCH_PATHS = ["$(TOOLCHAIN_DIR)/usr/lib/swift/macosx"]
             targetSettings.common.LD_RUNPATH_SEARCH_PATHS = ["$(inherited)", "@executable_path/Frameworks"]
-            if target.type == .main {
-                targetSettings.common.ENABLE_TESTABILITY = "YES"
-                targetSettings.common.PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)"
-                targetSettings.common.PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)"
-                targetSettings.common.DEVELOPMENT_TEAM = config.developmentTeam.isEmpty ? nil : config.developmentTeam
-                targetSettings.common.PRODUCT_BUNDLE_IDENTIFIER = config.organizationIdentifier + "." + target.c99name.mangledToBundleIdentifier()
-                if config.platform == .iOS {
-                    targetSettings.common.CODE_SIGN_IDENTITY[.iphoneos] = "iPhone Developer"
-                }
-                targetSettings.common.ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon"
-//                "CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-//                targetSettings.common.SKIP_INSTALL = "YES"
-            } else {
-                targetSettings.common.SWIFT_FORCE_STATIC_LINK_STDLIB = "NO"
-                targetSettings.common.SWIFT_FORCE_DYNAMIC_LINK_STDLIB = "YES"
-
-                targetSettings.common.LD_RUNPATH_SEARCH_PATHS += ["@executable_path"]
+            targetSettings.common.ENABLE_TESTABILITY = "YES"
+            targetSettings.common.PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)"
+            targetSettings.common.PRODUCT_MODULE_NAME = "$(TARGET_NAME:c99extidentifier)"
+            targetSettings.common.DEVELOPMENT_TEAM = config.developmentTeam.isEmpty ? nil : config.developmentTeam
+            targetSettings.common.PRODUCT_BUNDLE_IDENTIFIER = config.organizationIdentifier + "." + target.c99name.mangledToBundleIdentifier()
+            if config.platform == .iOS {
+                targetSettings.common.CODE_SIGN_IDENTITY[.iphoneos] = "iPhone Developer"
             }
+            targetSettings.common.ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon"
         }
 
         targetSettings.common.OTHER_LDFLAGS = ["$(inherited)"]

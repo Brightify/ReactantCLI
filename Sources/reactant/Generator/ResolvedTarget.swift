@@ -12,7 +12,7 @@ class ResolvedTarget: ObjectIdentifierProtocol {
     enum Kind {
         case main
         case unitTest
-        case uiTest
+        case uiTest(target: String)
     }
 
 
