@@ -13,31 +13,24 @@ class InitCommand: Command {
 
         try! generate(config: config, options: XcodeprojOptions())
 
-        if config.versionControl == .git {
-            shell(workingDir: config.projectDir.asString, "git", "init")
-            try open(config.projectDir.appending(component: ".gitignore")) { print in
-                gitignore().forEach(print)
-            }
-            shell(workingDir: config.projectDir.asString, "git", "add", "Application")
-            shell(workingDir: config.projectDir.asString, "git", "add", ".gitignore")
-            shell(workingDir: config.projectDir.asString, "git", "add", "\(config.productName).xcodeproj")
+        shell(workingDir: config.projectDir.asString, "git", "init")
+        try open(config.projectDir.appending(component: ".gitignore")) { print in
+            gitignore().forEach(print)
         }
+        shell(workingDir: config.projectDir.asString, "git", "add", "Application")
+        shell(workingDir: config.projectDir.asString, "git", "add", ".gitignore")
+        shell(workingDir: config.projectDir.asString, "git", "add", "\(config.productName).xcodeproj")
 
         switch config.dependencyManager {
         case .cocoaPods:
             shell(workingDir: config.projectDir.asString, "pod", "install")
-            if config.versionControl == .git {
-                shell(workingDir: config.projectDir.asString, "git", "add", "Podfile")
-                shell(workingDir: config.projectDir.asString, "git", "add", "Podfile.lock")
-            }
+            shell(workingDir: config.projectDir.asString, "git", "add", "Podfile")
+            shell(workingDir: config.projectDir.asString, "git", "add", "Podfile.lock")
             shell(workingDir: config.projectDir.asString, "open", "\(config.productName).xcworkspace")
         default:
             shell(workingDir: config.projectDir.asString, "open", "\(config.productName).xcodeproj")
         }
-
-        if config.versionControl == .git  {
-            shell(workingDir: config.projectDir.asString, "git", "commit", "-m Initial commit.")
-        }
+        shell(workingDir: config.projectDir.asString, "git", "commit", "-m Initial commit.")
     }
 
     func askForConfiguration() -> ProjectConfiguration {
@@ -108,12 +101,16 @@ class InitCommand: Command {
                 sources: Sources(items: mainSources, root: applicationDir),
                 type: .main)
         ]
-        if false && readBool(title: "Enable Unit Tests?") {
+        if readBool(title: "Enable Unit Tests?") {
             let unitTestDir = workingDir.appending(outputDir).appending(components: "UnitTests")
+            let unitTestSources = [
+                Source(path: "Info.plist", type: .fileRef),
+                Source(path: "FirstTest.swift", type: .source(exampleUnitTest)),
+                ]
             targets.append(
                 ResolvedTarget(
                     name: "\(productName)UnitTests",
-                    sources: Sources(items: [], root: unitTestDir),
+                    sources: Sources(items: unitTestSources, root: unitTestDir),
                     type: .unitTest)
             )
         }
@@ -131,8 +128,6 @@ class InitCommand: Command {
             )
         }
 
-        let versionControl: VersionControl = readBool(title: "Enable git?") ? .git : .none
-
         let setup = ProjectConfiguration(
             platform: .iOS,
             productName: productName,
@@ -143,7 +138,7 @@ class InitCommand: Command {
             outputDir: outputDir,
             targets: targets,
             experimentalFeatures: experimentalFeatures,
-            versionControl: versionControl)
+            versionControl: .git)
         print(setup)
         guard readBool(title: "Is the current configuration OK?") else { return askForConfiguration() }
 
