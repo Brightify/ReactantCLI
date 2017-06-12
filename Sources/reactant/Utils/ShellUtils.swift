@@ -8,7 +8,7 @@
 
 import Foundation
 
-func readString(title: String) -> String {
+public func readString(title: String) -> String {
     print(title.yellow)
     guard let string = readLine() else {
         return readString(title: title)
@@ -16,7 +16,7 @@ func readString(title: String) -> String {
     return string
 }
 
-func readBool(title: String) -> Bool {
+public func readBool(title: String) -> Bool {
     let string = readString(title: title + " [y/n]").lowercased()
     let trueValues = ["y", "yes", "true"] as Set<String>
     let falseValues = ["n", "no", "false"] as Set<String>
