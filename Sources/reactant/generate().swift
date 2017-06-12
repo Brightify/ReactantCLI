@@ -96,7 +96,7 @@ func generate(
 
 //    let applicationDir = outputDir.appending(components: "Application")
 //    let sourceDir = applicationDir.appending(component: "Source")
-//    let generatedDir = applicationDir.appending(component: "Generated")
+//    let generatedDir = config.workingDir.appending(config.outputDir).appending(component: "")
 //    let resourceDir = applicationDir.appending(component: "Resource")
 //
 //    try makeDirectories(applicationDir)
@@ -116,10 +116,8 @@ func generate(
             case .sourceRef, .fileRef, .resourceRef:
                 break
             case .directory:
-                try open(path.parentDirectory.appending(component: ".gitkeep")) { print in
-                    print("")
-                }
-
+                try makeDirectories(path)
+                shell(workingDir: path.asString, "touch", ".gitkeep")
             }
         }
     }
