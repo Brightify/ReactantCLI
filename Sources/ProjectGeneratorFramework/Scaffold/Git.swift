@@ -8,11 +8,11 @@
 
 import Foundation
 
-func gitKeep() -> [String] {
+public func gitKeep() -> [String] {
     return []
 }
 
-func gitignore() -> [String] {
+public func gitignore() -> [String] {
     return [
         "# Created by https://www.gitignore.io/api/swift,xcode,cocoapods",
         "Pods/",

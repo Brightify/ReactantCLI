@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum DependencyManager {
+public enum DependencyManager {
     case cocoaPods
     case carthage
     case swiftPM

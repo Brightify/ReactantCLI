@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum Platform: String {
+public enum Platform: String {
     case iOS
     case macOS
 

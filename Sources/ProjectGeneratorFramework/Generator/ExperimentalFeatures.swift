@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum ExperimentalFeatures: String {
+public enum ExperimentalFeatures: String {
     case torch
     case cuckoo
     case xmlUI

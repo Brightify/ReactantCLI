@@ -8,28 +8,28 @@
 
 import SwiftyTextTable
 
-struct ProjectConfiguration: CustomStringConvertible {
-    let platform: Platform
-    let productName: String
+public struct ProjectConfiguration: CustomStringConvertible {
+    public let platform: Platform
+    public let productName: String
     // let team: String
-    let developmentTeam: String
-    let organizationIdentifier: String
-    let dependencyManager: DependencyManager
-    let workingDir: AbsolutePath
-    let outputDir: RelativePath
-    let targets: [ResolvedTarget]
-    let experimentalFeatures: Set<ExperimentalFeatures>
-    let versionControl: VersionControl
+    public let developmentTeam: String
+    public let organizationIdentifier: String
+    public let dependencyManager: DependencyManager
+    public let workingDir: AbsolutePath
+    public let outputDir: RelativePath
+    public let targets: [ResolvedTarget]
+    public let experimentalFeatures: Set<ExperimentalFeatures>
+    public let versionControl: VersionControl
 
-    var projectDir: AbsolutePath {
+    public var projectDir: AbsolutePath {
         return workingDir.appending(outputDir)
     }
 
-    var bundleIdentifier: String {
+    public var bundleIdentifier: String {
         return "\(organizationIdentifier).\(productName)"
     }
 
-    var description: String {
+    public var description: String {
         let property = TextTableColumn(header: "Property")
         let value = TextTableColumn(header: "Value")
 

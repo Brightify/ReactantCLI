@@ -6,11 +6,17 @@ let package = Package(
     name: "ReactantCLI",
     targets: [
         Target(
-            name: "reactant",
+            name: "ProjectGeneratorFramework",
             dependencies: [
 
             ]
-        )
+        ),
+        Target(
+            name: "reactant",
+            dependencies: [
+                .Target(name: "ProjectGeneratorFramework")
+            ]
+        ),
     ],
     dependencies: [
         .Package(url: "https://github.com/jakeheis/SwiftCLI", majorVersion: 3, minor: 0),

@@ -8,7 +8,7 @@
 
 import Foundation
 
-func appDelegate(experimentalFeatures: Set<ExperimentalFeatures>) -> () -> [String] {
+public func appDelegate(experimentalFeatures: Set<ExperimentalFeatures>) -> () -> [String] {
     return {
         [
             "import UIKit",

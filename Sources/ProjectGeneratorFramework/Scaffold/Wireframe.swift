@@ -8,7 +8,7 @@
 
 import Foundation
 
-func mainWireframe() -> [String] {
+public func mainWireframe() -> [String] {
     return [
         "import UIKit",
         "import Reactant",

@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum VersionControl: String {
+public enum VersionControl: String {
     case git
     case none
 }

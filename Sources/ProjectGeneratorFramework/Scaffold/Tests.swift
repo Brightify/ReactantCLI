@@ -8,7 +8,7 @@
 
 import Foundation
 
-func exampleUnitTest() -> [String] {
+public func exampleUnitTest() -> [String] {
     return [
         "import XCTest",
         "",

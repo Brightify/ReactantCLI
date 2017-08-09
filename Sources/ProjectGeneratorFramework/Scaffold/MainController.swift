@@ -8,11 +8,11 @@
 
 import Foundation
 
-func mainController() -> [String] {
+public func mainController() -> [String] {
     return controller()
 }
 
-func controller(controllerName: String = "MainController", rootViewName: String = "MainRootView") -> [String] {
+public func controller(controllerName: String = "MainController", rootViewName: String = "MainRootView") -> [String] {
     return [
         "import Reactant",
         "",
@@ -21,11 +21,11 @@ func controller(controllerName: String = "MainController", rootViewName: String 
     ]
 }
 
-func mainRootView() -> [String] {
+public func mainRootView() -> [String] {
     return rootView()
 }
 
-func rootView(rootViewName: String = "MainRootView") -> [String] {
+public func rootView(rootViewName: String = "MainRootView") -> [String] {
     return [
         "import Reactant",
         "",
@@ -47,7 +47,7 @@ func rootView(rootViewName: String = "MainRootView") -> [String] {
     ]
 }
 
-func component(componentName: String = "MainRootView") -> [String] {
+public func component(componentName: String = "MainRootView") -> [String] {
     return [
         "import Reactant",
         "",
@@ -56,7 +56,7 @@ func component(componentName: String = "MainRootView") -> [String] {
     ]
 }
 
-func componentXML() -> [String] {
+public func componentXML() -> [String] {
     return [
         "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>",
         "<Component",
@@ -73,11 +73,11 @@ func componentXML() -> [String] {
     ]
 }
 
-func mainRootViewXml() -> [String] {
+public func mainRootViewXml() -> [String] {
     return componentXML()
 }
 
-func mainRootViewXmlUI() -> [String] {
+public func mainRootViewXmlUI() -> [String] {
     return [
         "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>",
         "<Component",
@@ -95,7 +95,7 @@ func mainRootViewXmlUI() -> [String] {
     ]
 }
 
-func generalStyles() -> [String] {
+public func generalStyles() -> [String] {
     return [
         "<styleGroup name=\"general\">",
         "    <ViewStyle name=\"controllerRootView\" backgroundColor=\"white\"/>",

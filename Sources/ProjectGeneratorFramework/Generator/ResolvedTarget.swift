@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ResolvedTarget: ObjectIdentifierProtocol {
+public class ResolvedTarget: ObjectIdentifierProtocol {
     enum Kind {
         case main
         case unitTest

@@ -7,6 +7,7 @@
 
 import SwiftCLI
 import Foundation
+import ProjectGeneratorFramework
 
 class CreateComponentCommand: Command {
 

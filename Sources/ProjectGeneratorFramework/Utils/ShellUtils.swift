@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Rainbow
 
 public func readString(title: String) -> String {
     print(title.yellow)
@@ -30,7 +31,7 @@ public func readBool(title: String) -> Bool {
 }
 
 @discardableResult
-func shell(workingDir: String? = nil, _ args: String...) -> Int32 {
+public func shell(workingDir: String? = nil, _ args: String...) -> Int32 {
     let task = Process()
     task.launchPath = "/usr/bin/env"
     task.arguments = args
@@ -46,7 +47,7 @@ func shell(workingDir: String? = nil, _ args: String...) -> Int32 {
 ///
 /// This method doesn't rewrite the file in case the new and old contents of
 /// file are same.
-func open(_ path: AbsolutePath, body: ((String) -> Void) throws -> Void) throws {
+public func open(_ path: AbsolutePath, body: ((String) -> Void) throws -> Void) throws {
     // let stream = BufferedOutputByteStream()
     var lines = [] as [String]
     try body { line in

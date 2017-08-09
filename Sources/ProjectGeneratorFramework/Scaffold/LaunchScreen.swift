@@ -8,7 +8,7 @@
 
 import Foundation
 
-func launchScreen() -> [String] {
+public func launchScreen() -> [String] {
     return [
         "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>",
         "<document type=\"com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB\" version=\"3.0\" toolsVersion=\"11134\" systemVersion=\"15F34\" targetRuntime=\"iOS.CocoaTouch\" propertyAccessControl=\"none\" useAutolayout=\"YES\"", "launchScreen=\"YES\" useTraitCollections=\"YES\" colorMatched=\"YES\" initialViewController=\"01J-lp-oVM\">",

@@ -7,7 +7,8 @@
 //
 
 import Foundation
-func assetsJson() -> [String] {
+
+public func assetsJson() -> [String] {
     return [
         "{",
         "    \"info\" : {",
@@ -18,7 +19,7 @@ func assetsJson() -> [String] {
     ]
 }
 
-func appIconJson() -> [String] {
+public func appIconJson() -> [String] {
     return [
         "{",
         "  \"images\" : [",

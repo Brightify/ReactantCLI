@@ -43,7 +43,7 @@ public struct XcodeprojOptions {
 /// the file name on the project name `projectName`.  Returns the path of the
 /// generated project.  All ancillary files will be generated inside of the
 /// .xcodeproj wrapper directory.
-func generate(
+public func generate(
     config: ProjectConfiguration,
     options: XcodeprojOptions
 ) throws -> AbsolutePath {

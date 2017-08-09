@@ -8,7 +8,7 @@
 
 import Foundation
 
-func sampleService() -> [String] {
+public func sampleService() -> [String] {
     return [
         "import Foundation",
         "",

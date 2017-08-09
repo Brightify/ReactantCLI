@@ -8,7 +8,7 @@
 
 import Foundation
 
-func sampleTorchModel() -> [String] {
+public func sampleTorchModel() -> [String] {
     return [
         "import Torch",
         "",
@@ -20,7 +20,7 @@ func sampleTorchModel() -> [String] {
     ]
 }
 
-func sampleModel() -> [String] {
+public func sampleModel() -> [String] {
     return [
         "import Foundation",
         "",
