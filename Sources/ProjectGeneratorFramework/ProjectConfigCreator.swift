@@ -18,7 +18,7 @@ public class ProjectConfigCreator {
                           enableUnitTests: Bool,
                           enableUITests: Bool) -> ProjectConfiguration {
 
-        let workingDir = AbsolutePath.init(projectPath)
+        let workingDir = AbsolutePath(projectPath)
         let outputDir = RelativePath(productName)
         let applicationDir = workingDir.appending(outputDir).appending(components: "Application")
 
