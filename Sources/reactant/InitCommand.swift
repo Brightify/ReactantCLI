@@ -75,21 +75,10 @@ class InitCommand: Command {
             config = askForConfiguration()
         }
 
-        try! generate(config: config, options: XcodeprojOptions())
-
-        shell(workingDir: config.projectDir.asString, "git", "init")
-        try open(config.projectDir.appending(component: ".gitignore")) { print in
-            gitignore().forEach(print)
-        }
-        shell(workingDir: config.projectDir.asString, "git", "add", "Application")
-        shell(workingDir: config.projectDir.asString, "git", "add", ".gitignore")
-        shell(workingDir: config.projectDir.asString, "git", "add", "\(config.productName).xcodeproj")
+        try! ProjectGenerator.generateProject(config: config)
 
         switch config.dependencyManager {
         case .cocoaPods:
-            shell(workingDir: config.projectDir.asString, "pod", "install")
-            shell(workingDir: config.projectDir.asString, "git", "add", "Podfile")
-            shell(workingDir: config.projectDir.asString, "git", "add", "Podfile.lock")
             if argumentedInit.value == false {
                 shell(workingDir: config.projectDir.asString, "open", "\(config.productName).xcworkspace")
             }
@@ -98,7 +87,6 @@ class InitCommand: Command {
                 shell(workingDir: config.projectDir.asString, "open", "\(config.productName).xcodeproj")
             }
         }
-        shell(workingDir: config.projectDir.asString, "git", "commit", "-m Initial commit.")
     }
 
     func askForConfiguration() -> ProjectConfiguration {
@@ -138,4 +126,26 @@ class InitCommand: Command {
         return setup
     }
 
+}
+
+
+public func readString(title: String) -> String {
+    print(title.yellow)
+    guard let string = readLine() else {
+        return readString(title: title)
+    }
+    return string
+}
+
+public func readBool(title: String) -> Bool {
+    let string = readString(title: title + " [y/n]").lowercased()
+    let trueValues = ["y", "yes", "true"] as Set<String>
+    let falseValues = ["n", "no", "false"] as Set<String>
+    if trueValues.contains(string) {
+        return true
+    } else if falseValues.contains(string) {
+        return false
+    } else {
+        return readBool(title: title)
+    }
 }

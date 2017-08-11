@@ -7,28 +7,6 @@
 //
 
 import Foundation
-import Rainbow
-
-public func readString(title: String) -> String {
-    print(title.yellow)
-    guard let string = readLine() else {
-        return readString(title: title)
-    }
-    return string
-}
-
-public func readBool(title: String) -> Bool {
-    let string = readString(title: title + " [y/n]").lowercased()
-    let trueValues = ["y", "yes", "true"] as Set<String>
-    let falseValues = ["n", "no", "false"] as Set<String>
-    if trueValues.contains(string) {
-        return true
-    } else if falseValues.contains(string) {
-        return false
-    } else {
-        return readBool(title: title)
-    }
-}
 
 @discardableResult
 public func shell(workingDir: String? = nil, _ args: String...) -> Int32 {
