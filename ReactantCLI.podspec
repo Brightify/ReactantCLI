@@ -8,4 +8,5 @@ Pod::Spec.new do |spec|
   spec.source       = { :git => 'https://github.com/Brightify/ReactantCLI.git', :branch => 'components' }
   spec.source_files = ['Sources/ProjectGeneratorFramework/**/*.swift']
   spec.framework    = 'Foundation'
+  spec.osx.deployment_target       = '10.9'
 end
