@@ -51,7 +51,7 @@ public func generate(
     // path of the root package (which is where the sources live).
 
     // FIXME Escape the name
-    let outputDir = config.workingDir.appending(config.outputDir)
+    let outputDir = config.projectDir
 
     // Determine the path of the .xcodeproj wrapper directory.
     let xcodeprojName = "\(config.productName).xcodeproj"

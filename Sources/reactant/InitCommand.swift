@@ -11,6 +11,7 @@ class InitCommand: Command {
     let developmentTeam = Key<String>("--team", usage: "Development team")
     let organizationIdentifier = Key<String>("--identifier", usage: "Input organization identifier")
     let outputDir = Key<String>("--outputDir", usage: "Input where to create project")
+    let useCurrentPathAsProjectRoot = Flag("--currentPathAsProjectRoot", usage: "Use current path as project root", defaultValue: false)
     let rui = Flag("--rui", usage: "Enable LiveUI")
     let torch = Flag("--torch", usage: "Enable Torch")
     let cuckoo = Flag("--cuckoo", usage: "Enable Cuckoo")
@@ -70,7 +71,8 @@ class InitCommand: Command {
                                       projectPath: outputDir,
                                       experimentalFeatures: experimentalFeatures,
                                       enableUnitTests: unitTests.value,
-                                      enableUITests: uiTests.value)
+                                      enableUITests: uiTests.value,
+                                      createProjectFolder: useCurrentPathAsProjectRoot.value == false)
         } else {
             config = askForConfiguration()
         }
@@ -113,6 +115,8 @@ class InitCommand: Command {
         let enableUnitTests = readBool(title: "Enable Unit Tests?")
 
         let enableUITests = readBool(title: "Enable UI Tests?")
+        
+        let useCurrentPathAsProjectRoot = readBool(title: "Use current path as project root?")
 
         let setup = ProjectConfigCreator.getConfig(productName: productName,
                                      developmentTeam: developmentTeam,
@@ -120,7 +124,11 @@ class InitCommand: Command {
                                      projectPath: FileManager.default.currentDirectoryPath,
                                      experimentalFeatures: experimentalFeatures,
                                      enableUnitTests: enableUnitTests,
-                                     enableUITests: enableUITests)
+                                     enableUITests: enableUITests,
+                                     createProjectFolder: useCurrentPathAsProjectRoot == false)
+        
+        print(setup.description)
+        
         guard readBool(title: "Is the current configuration OK?") else { return askForConfiguration() }
 
         return setup

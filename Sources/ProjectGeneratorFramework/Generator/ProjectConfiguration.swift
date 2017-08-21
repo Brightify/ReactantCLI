@@ -15,15 +15,10 @@ public struct ProjectConfiguration: CustomStringConvertible {
     public let developmentTeam: String
     public let organizationIdentifier: String
     public let dependencyManager: DependencyManager
-    public let workingDir: AbsolutePath
-    public let outputDir: RelativePath
+    public let projectDir: AbsolutePath
     public let targets: [ResolvedTarget]
     public let experimentalFeatures: Set<ExperimentalFeatures>
     public let versionControl: VersionControl
-
-    public var projectDir: AbsolutePath {
-        return workingDir.appending(outputDir)
-    }
 
     public var bundleIdentifier: String {
         return "\(organizationIdentifier).\(productName)"
@@ -39,7 +34,7 @@ public struct ProjectConfiguration: CustomStringConvertible {
         table.addRow(values: ["product name", productName])
         table.addRow(values: ["development team", developmentTeam])
         table.addRow(values: ["bundle identifier", bundleIdentifier])
-        table.addRow(values: ["output dir", outputDir.asString])
+        table.addRow(values: ["output dir", projectDir.asString])
         table.addRow(values: ["experimental features", experimentalFeatures.map { $0.name }])
         table.addRow(values: ["version control", versionControl.rawValue])
 

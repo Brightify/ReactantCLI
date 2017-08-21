@@ -16,11 +16,19 @@ public class ProjectConfigCreator {
                           projectPath: String,
                           experimentalFeatures: Set<ExperimentalFeatures>,
                           enableUnitTests: Bool,
-                          enableUITests: Bool) -> ProjectConfiguration {
+                          enableUITests: Bool,
+                          createProjectFolder: Bool) -> ProjectConfiguration {
 
         let workingDir = AbsolutePath(projectPath)
         let outputDir = RelativePath(productName)
-        let applicationDir = workingDir.appending(outputDir).appending(components: "Application")
+        let projectDir: AbsolutePath
+        if createProjectFolder {
+            projectDir = workingDir.appending(outputDir)
+        } else {
+            projectDir = workingDir
+        }
+        
+        let applicationDir = projectDir.appending(components: "Application")
 
         var mainSources = [] as [Source]
 
@@ -66,7 +74,7 @@ public class ProjectConfigCreator {
                 type: .main)
         ]
         if enableUnitTests {
-            let unitTestDir = workingDir.appending(outputDir).appending(components: "UnitTests")
+            let unitTestDir = projectDir.appending(components: "UnitTests")
             let unitTestSources = [
                 Source(path: "Info.plist", type: .fileRef),
                 Source(path: "FirstTest.swift", type: .source(exampleUnitTest)),
@@ -79,7 +87,8 @@ public class ProjectConfigCreator {
             )
         }
         if enableUITests {
-            let uiTestDir = workingDir.appending(outputDir).appending(components: "UITests")
+            let uiTestDir = projectDir.appending(components: "UITests")
+            
             let uiTestSources = [
                 Source(path: "Info.plist", type: .fileRef),
                 Source(path: "FirstUITest.swift", type: .source(exampleTest)),
@@ -98,8 +107,7 @@ public class ProjectConfigCreator {
             developmentTeam: developmentTeam,
             organizationIdentifier: organizationIdentifier,
             dependencyManager: .cocoaPods,
-            workingDir: workingDir,
-            outputDir: outputDir,
+            projectDir: projectDir,
             targets: targets,
             experimentalFeatures: experimentalFeatures,
             versionControl: .git)
