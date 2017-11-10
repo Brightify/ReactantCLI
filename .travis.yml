@@ -1,0 +1,13 @@
+language: objective-c
+
+script:
+    - make
+
+env:
+  global:
+    - GIT_NAME: Travis CI
+    - GIT_EMAIL: info@brightify.org
+    - GITHUB_REPO: Brightify/ReactantCLI
+
+notifications:
+    slack: brightify:00rIGJIfWqG5RyWCVoRNEgxt
