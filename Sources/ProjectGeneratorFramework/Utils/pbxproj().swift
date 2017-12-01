@@ -134,9 +134,9 @@ func xcodeProject(
     // Prevent Xcode project upgrade warnings.
     projectSettings.common.COMBINE_HIDPI_IMAGES = "YES"
 
-    // Set the Swift version to 3.0 (we'll need to make this dynamic), but for
+    // Set the Swift version to 4.0 (we'll need to make this dynamic), but for
     // now this is necessary.
-    projectSettings.common.SWIFT_VERSION = "3.0"
+    projectSettings.common.SWIFT_VERSION = "4.0"
 
     // Defined for regular `swift build` instantiations, so also should be defined here.
     projectSettings.common.SWIFT_ACTIVE_COMPILATION_CONDITIONS = "SWIFT_PACKAGE"
@@ -372,7 +372,7 @@ func xcodeProject(
         case .unitTest, .uiTest:
             targetSettings.common.EMBEDDED_CONTENT_CONTAINS_SWIFT = "YES"
             targetSettings.common.LD_RUNPATH_SEARCH_PATHS = ["@loader_path/../Frameworks", "@loader_path/Frameworks"]
-            
+
             if case .uiTest(let testTarget) = target.type {
                 targetSettings.common.TEST_TARGET_NAME = testTarget
             }
