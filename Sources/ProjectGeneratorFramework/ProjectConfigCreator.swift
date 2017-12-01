@@ -27,7 +27,7 @@ public class ProjectConfigCreator {
         } else {
             projectDir = workingDir
         }
-        
+
         let applicationDir = projectDir.appending(components: "Application")
 
         var mainSources = [] as [Source]
@@ -44,8 +44,8 @@ public class ProjectConfigCreator {
         }
 
         if experimentalFeatures.contains(.xmlUI) {
-            mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .sourceRef))
-            mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source({ component(componentName:"MainRootView")} )))
+            mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .source({ "" }))) // this way the user doesn't have to add it manually later
+            mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source({ component(componentName:"MainRootView") })))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.ui.xml", type: .file(mainRootViewXmlUI)))
             mainSources.append(Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)))
         } else {
@@ -88,7 +88,7 @@ public class ProjectConfigCreator {
         }
         if enableUITests {
             let uiTestDir = projectDir.appending(components: "UITests")
-            
+
             let uiTestSources = [
                 Source(path: "Info.plist", type: .fileRef),
                 Source(path: "FirstUITest.swift", type: .source(exampleTest)),
@@ -111,7 +111,7 @@ public class ProjectConfigCreator {
             targets: targets,
             experimentalFeatures: experimentalFeatures,
             versionControl: .git)
-        
+
         return setup
     }
 }
