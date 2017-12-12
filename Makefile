@@ -1,6 +1,9 @@
-.PHONY : clean superclean build install
+.PHONY : clean superclean build install dev
 
 default: clean build
+
+dev:
+	swift package generate-xcodeproj
 
 clean:
 	swift package clean

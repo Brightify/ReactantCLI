@@ -5,19 +5,19 @@ import ProjectGeneratorFramework
 
 class InitCommand: Command {
 
-    let argumentedInit = Flag("-a", "--arguments", usage: "Create project using arguments only")
+    let argumentedInit = Flag("-a", "--arguments", description: "Create project using arguments only")
 //    let iosFlag = Flag("--ios", usage: "Create ios project")
-    let productName = Key<String>("--name", usage: "Input name of the project")
-    let developmentTeam = Key<String>("--team", usage: "Development team")
-    let organizationIdentifier = Key<String>("--identifier", usage: "Input organization identifier")
-    let outputDir = Key<String>("--outputDir", usage: "Input where to create project")
-    let useCurrentPathAsProjectRoot = Flag("--currentPathAsProjectRoot", usage: "Use current path as project root", defaultValue: false)
-    let rui = Flag("--rui", usage: "Enable LiveUI")
-    let torch = Flag("--torch", usage: "Enable Torch")
-    let cuckoo = Flag("--cuckoo", usage: "Enable Cuckoo")
-    let xui = Flag("--xmlui", usage: "Enable XML UI definition")
-    let uiTests = Flag("--uiTests", usage: "Enable UI testing")
-    let unitTests = Flag("--unitTests", usage: "Enable unit tests")
+    let productName = Key<String>("--name", description: "Input name of the project")
+    let developmentTeam = Key<String>("--team", description: "Development team")
+    let organizationIdentifier = Key<String>("--identifier", description: "Input organization identifier")
+    let outputDir = Key<String>("--outputDir", description: "Input where to create project")
+    let useCurrentPathAsProjectRoot = Flag("--currentPathAsProjectRoot", description: "Use current path as project root", defaultValue: false)
+    let rui = Flag("--rui", description: "Enable LiveUI")
+    let torch = Flag("--torch", description: "Enable Torch")
+    let cuckoo = Flag("--cuckoo", description: "Enable Cuckoo")
+    let xui = Flag("--xmlui", description: "Enable XML UI definition")
+    let uiTests = Flag("--uiTests", description: "Enable UI testing")
+    let unitTests = Flag("--unitTests", description: "Enable unit tests")
 
     let name = "init"
     let shortDescription = "Initializes a Reactant project"

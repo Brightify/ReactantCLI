@@ -1,26 +1,27 @@
-// swift-tools-version:3.1
+// swift-tools-version:4.0
 
 import PackageDescription
 
 let package = Package(
     name: "ReactantCLI",
-    targets: [
-        Target(
-            name: "ProjectGeneratorFramework",
-            dependencies: [
-
-            ]
-        ),
-        Target(
-            name: "reactant",
-            dependencies: [
-                .Target(name: "ProjectGeneratorFramework")
-            ]
-        ),
+    products: [
+        .library(name: "ProjectGenerator", targets: ["ProjectGeneratorFramework"]),
+        .executable(name: "reactant", targets: ["reactant"]),
     ],
     dependencies: [
-        .Package(url: "https://github.com/jakeheis/SwiftCLI", majorVersion: 3, minor: 0),
-        .Package(url: "https://github.com/onevcat/Rainbow", majorVersion: 2),
-        .Package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", "0.5.0")
+        .package(url: "https://github.com/jakeheis/SwiftCLI", .upToNextMinor(from: "4.0.0")),
+        .package(url: "https://github.com/onevcat/Rainbow", .upToNextMinor(from: "3.0.0")),
+        .package(url: "https://github.com/scottrhoyt/SwiftyTextTable.git", from: "0.8.0"),
+    ],
+    targets: [
+        .target(name: "ProjectGeneratorFramework"),
+        .target(name: "reactant", dependencies: [
+            "SwiftCLI",
+            "Rainbow",
+            "SwiftyTextTable",
+            .target(name: "ProjectGeneratorFramework"),
+        ]),
+        .testTarget(name: "ReactantCLITests", dependencies: [
+            ]),
     ]
 )

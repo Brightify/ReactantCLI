@@ -14,9 +14,9 @@ public enum ExperimentalFeatures: String {
     case xmlUI
     case liveUI
 
-    var name: String {
+    public var name: String {
         return rawValue
     }
 
-    static let allFeatures: [ExperimentalFeatures] = [.torch, .cuckoo, .xmlUI, .liveUI]
+    public static let allFeatures: [ExperimentalFeatures] = [.torch, .cuckoo, .xmlUI, .liveUI]
 }

@@ -473,7 +473,7 @@ func xcodeProject(
             case .file, .fileRef:
                 group.addFileReference(path: sourceFile.path.basename)
             case .directory:
-                makeGroup(for: path)
+                _ = makeGroup(for: path)
             }
 
 

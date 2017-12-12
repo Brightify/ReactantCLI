@@ -12,11 +12,11 @@ public enum Platform: String {
     case iOS
     case macOS
 
-    var name: String {
+    public var name: String {
         return rawValue
     }
 
-    var sdks: Set<SDK> {
+    public var sdks: Set<SDK> {
         switch self {
         case .iOS:
             return [.iphoneos, .iphonesimulator]
@@ -25,7 +25,7 @@ public enum Platform: String {
         }
     }
 
-    var sdkRoot: String {
+    public var sdkRoot: String {
         switch self {
         case .iOS:
             return SDK.iphoneos.name
@@ -34,5 +34,5 @@ public enum Platform: String {
         }
     }
 
-    static let allPlatforms: [Platform] = [.iOS, .macOS]
+    public static let allPlatforms: [Platform] = [.iOS, .macOS]
 }

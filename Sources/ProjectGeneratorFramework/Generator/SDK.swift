@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum SDK: String {
+public enum SDK: String {
     case macosx
     case iphoneos
     case iphonesimulator
@@ -17,7 +17,7 @@ enum SDK: String {
     case watchos
     case watchsimulator
 
-    var name: String {
+    public var name: String {
         return rawValue
     }
 }

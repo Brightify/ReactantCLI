@@ -11,7 +11,7 @@ import Foundation
 public class ProjectGenerator {
 
     public static func generateProject(config: ProjectConfiguration) throws {
-        try generate(config: config, options: XcodeprojOptions())
+        _ = try generate(config: config, options: XcodeprojOptions())
 
         shell(workingDir: config.projectDir.asString, "git", "init")
         try open(config.projectDir.appending(component: ".gitignore")) { print in
