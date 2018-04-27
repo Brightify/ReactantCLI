@@ -134,9 +134,9 @@ func xcodeProject(
     // Prevent Xcode project upgrade warnings.
     projectSettings.common.COMBINE_HIDPI_IMAGES = "YES"
 
-    // Set the Swift version to 4.0 (we'll need to make this dynamic), but for
+    // Set the Swift version to 4.1 (we'll need to make this dynamic), but for
     // now this is necessary.
-    projectSettings.common.SWIFT_VERSION = "4.0"
+    projectSettings.common.SWIFT_VERSION = "4.1"
 
     // Defined for regular `swift build` instantiations, so also should be defined here.
     projectSettings.common.SWIFT_ACTIVE_COMPILATION_CONDITIONS = "SWIFT_PACKAGE"
