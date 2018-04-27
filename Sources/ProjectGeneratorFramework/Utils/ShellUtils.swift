@@ -21,6 +21,34 @@ public func shell(workingDir: String? = nil, _ args: String...) -> Int32 {
     return task.terminationStatus
 }
 
+func shellOutput(workingDir: String?, _ args: String...) -> String {
+    let task = Process()
+    task.launchPath = "/usr/bin/env"
+    task.arguments = args
+    if let workingDir = workingDir {
+        task.currentDirectoryPath = workingDir
+    }
+
+    let pipe = Pipe()
+    task.standardOutput = pipe
+    task.launch()
+
+    let data = pipe.fileHandleForReading.readDataToEndOfFile()
+    let output: String = String(data: data, encoding: String.Encoding.utf8) ?? ""
+
+    return output
+}
+
+public var swiftVersion: String {
+    let output = shellOutput(workingDir: nil, "swift", "--version")
+    let version = output.components(separatedBy: " ")[3]
+    let regex = try! NSRegularExpression(pattern: "\\d+\\.\\d+")
+    if regex.matches(in: version, options: [], range: NSMakeRange(0, version.count)).isEmpty {
+        fatalError("Unknown Swift version.")
+    }
+    return version
+}
+
 /// Writes the contents to the file specified.
 ///
 /// This method doesn't rewrite the file in case the new and old contents of
