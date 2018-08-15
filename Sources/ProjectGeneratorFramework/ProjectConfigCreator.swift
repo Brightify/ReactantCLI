@@ -44,7 +44,7 @@ public class ProjectConfigCreator {
         }
 
         if experimentalFeatures.contains(.xmlUI) {
-            mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .source({ "" }))) // this way the user doesn't have to add it manually later
+            mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .source { [""] })) // this way the user doesn't have to add it manually later
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source({ component(componentName:"MainRootView") })))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.ui.xml", type: .file(mainRootViewXmlUI)))
             mainSources.append(Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)))
