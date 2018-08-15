@@ -411,8 +411,7 @@ func xcodeProject(
                 "pushd \"$PODS_ROOT/ReactantUI\"",
                 "env -i HOME=\"$HOME\" PATH=\"$PATH\" swift build",
                 "popd",
-                "cd \"$SRCROOT/Application/Sources\"",
-                "\"$PODS_ROOT/ReactantUI/.build/debug/reactant-ui\"\(enableLive) > \"$SRCROOT/Application/Generated/GeneratedUI.swift\"",
+                "\"$PODS_ROOT/ReactantUI/.build/debug/reactant-ui\" generate \(enableLive) --inputPath=\"$SRCROOT/Application/Sources\" --outputFile=\"$SRCROOT/Application/Generated/GeneratedUI.swift\" --xcodeprojPath=\"$PROJECT_DIR/$PROJECT_NAME.xcodeproj\" --description=\"$SRCROOT/Application/Resources/$PROJECT_NAME.hyperdrive.xml\" --generate-disposable-helper"
                 ].joined(separator: "\n"))
             runReactantUI.name = "Run ReactantUI"
         }

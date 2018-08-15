@@ -77,12 +77,12 @@ public func generate(
         print("    use_frameworks!")
         switch config.platform {
         case .iOS:
-            print("    pod 'Reactant', '~> 1.0'")
+            print("    pod 'Reactant', :git => 'https://github.com/Brightify/Reactant.git', :branch => 'master', :subspecs => ['All-iOS']")
             if config.experimentalFeatures.contains(.xmlUI) {
-                print("    pod 'ReactantUI'")
+                print("    pod 'ReactantUI', :git => 'https://github.com/Brightify/ReactantUI.git', :branch => 'master'")
             }
             if config.experimentalFeatures.contains(.liveUI) {
-                print("    pod 'ReactantLiveUI', :configuration => 'Debug'")
+                print("    pod 'ReactantLiveUI', :git => 'https://github.com/Brightify/ReactantUI.git', :branch => 'master', :configuration => 'Debug'")
             }
             if config.experimentalFeatures.contains(.torch) {
                 print("    pod 'TorchORM', :git => 'https://github.com/SwiftKit/Torch.git', :branch => 'swift-pm'")

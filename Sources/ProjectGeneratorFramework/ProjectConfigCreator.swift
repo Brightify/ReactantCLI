@@ -48,6 +48,7 @@ public class ProjectConfigCreator {
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source({ component(componentName:"MainRootView") })))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.ui.xml", type: .file(mainRootViewXmlUI)))
             mainSources.append(Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)))
+            mainSources.append(Source(path: "Resources/\(productName).hyperdrive.xml", type: .source(hyperdriveConfig)))
         } else {
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source(mainRootView)))
         }
