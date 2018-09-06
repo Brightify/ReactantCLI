@@ -26,7 +26,7 @@ public func appDelegate(experimentalFeatures: Set<ExperimentalFeatures>) -> () -
             "        Configuration.global.set(Properties.Style.controllerRoot) { $0.backgroundColor = .white }",
             "",
             "        let window = UIWindow()",
-            "        let wireframe = MainWireframe(module: module)",
+            "        let wireframe = ApplicationWireframe(module: module)",
             "        window.rootViewController = wireframe.entrypoint()",
             "        window.makeKeyAndVisible()",
             "        self.window = window",

@@ -27,7 +27,7 @@ public class ProjectConfigCreator {
         } else {
             projectDir = workingDir
         }
-        
+
         let applicationDir = projectDir.appending(components: "Application")
 
         var mainSources = [] as [Source]
@@ -44,10 +44,11 @@ public class ProjectConfigCreator {
         }
 
         if experimentalFeatures.contains(.xmlUI) {
-            mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .sourceRef))
-            mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source({ component(componentName:"MainRootView")} )))
+            mainSources.append(Source(path: "Generated/GeneratedUI.swift", type: .source { [""] })) // this way the user doesn't have to add it manually later
+            mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source({ component(componentName:"MainRootView") })))
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.ui.xml", type: .file(mainRootViewXmlUI)))
             mainSources.append(Source(path: "Sources/Styles/General.styles.xml", type: .file(generalStyles)))
+            mainSources.append(Source(path: "Resources/\(productName).hyperdrive.xml", type: .source(hyperdriveConfig)))
         } else {
             mainSources.append(Source(path: "Sources/Components/Main/MainRootView.swift", type: .source(mainRootView)))
         }
@@ -56,8 +57,8 @@ public class ProjectConfigCreator {
             Source(path: "Sources/Components/Main/MainController.swift", type: .source(mainController)),
             Source(path: "Sources/Services/SampleService.swift", type: .source(sampleService)),
             Source(path: "Sources/Wireframes/MainWireframe.swift", type: .source(mainWireframe)),
+            Source(path: "Sources/Wireframes/ApplicationWireframe.swift", type: .source(applicationWireframe)),
             Source(path: "Sources/AppDelegate.swift", type: .source(appDelegate(experimentalFeatures: experimentalFeatures))),
-            Source(path: "Sources/DependencyModule.swift", type: .source(dependencyModule)),
             Source(path: "Sources/ApplicationModule.swift", type: .source(applicationModule)),
             Source(path: "Resources/Assets.xcassets/AppIcon.appiconset/Contents.json", type: .file(assetsJson), ignoreXcode: true),
             Source(path: "Resources/Assets.xcassets/Contents.json", type: .file(assetsJson), ignoreXcode: true),
@@ -88,7 +89,7 @@ public class ProjectConfigCreator {
         }
         if enableUITests {
             let uiTestDir = projectDir.appending(components: "UITests")
-            
+
             let uiTestSources = [
                 Source(path: "Info.plist", type: .fileRef),
                 Source(path: "FirstUITest.swift", type: .source(exampleTest)),
@@ -111,7 +112,7 @@ public class ProjectConfigCreator {
             targets: targets,
             experimentalFeatures: experimentalFeatures,
             versionControl: .git)
-        
+
         return setup
     }
 }

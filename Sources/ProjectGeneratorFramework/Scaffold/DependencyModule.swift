@@ -8,16 +8,9 @@
 
 import Foundation
 
-public func dependencyModule() -> [String] {
-    return [
-        "protocol DependencyModule {",
-        "}",
-    ]
-}
-
 public func applicationModule() -> [String] {
     return [
-        "final class ApplicationModule: DependencyModule {",
+        "final class ApplicationModule: MainDependencyModule {",
         "}",
     ]
 }

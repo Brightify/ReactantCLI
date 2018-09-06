@@ -8,16 +8,51 @@
 
 import Foundation
 
+public func applicationWireframe() -> [String] {
+    return [
+        "import UIKit",
+        "import Reactant",
+        "",
+        "final class ApplicationWireframe {",
+        "    private let module: ApplicationModule",
+        "",
+        "    init(module: ApplicationModule) {",
+        "        self.module = module",
+        "    }",
+        "",
+        "    func entrypoint() -> UIViewController {",
+        "        return mainWire(context: MainWireframe.Context()).entrypoint()",
+        "    }",
+        "",
+        "    private func mainWire(context: MainWireframe.Context) -> MainWireframe {",
+        "        return MainWireframe(module: module, context: context, wires: MainWireframe.Wires())",
+        "    }",
+        "}"
+    ]
+}
+
 public func mainWireframe() -> [String] {
     return [
         "import UIKit",
         "import Reactant",
         "",
-        "final class MainWireframe: Wireframe {",
-        "    private let module: DependencyModule",
+        "protocol MainDependencyModule {",
+        "}",
         "",
-        "    init(module: DependencyModule) {",
+        "final class MainWireframe: Wireframe {",
+        "    struct Context {",
+        "    }",
+        "    struct Wires {",
+        "    }",
+        "",
+        "    private let module: MainDependencyModule",
+        "    private let context: Context",
+        "    private let wires: Wires",
+        "",
+        "    init(module: MainDependencyModule, context: Context, wires: Wires) {",
         "        self.module = module",
+        "        self.context = context",
+        "        self.wires = wires",
         "    }",
         "",
         "    func entrypoint() -> UIViewController {",
@@ -33,3 +68,5 @@ public func mainWireframe() -> [String] {
         "}",
     ]
 }
+
+
